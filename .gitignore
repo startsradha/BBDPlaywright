@@ -1,25 +1,32 @@
+# node
 node_modules/
 reports/*.json
 reports/*.html
 screenshots/*.png
 coverage/
 
+# Environment variables
 .env
 .env.*
 !.env.example
 
+# playwright
 test-results/
 playwright-report/
 blob-report/
 
+#Allure
 allure-report/
 allure-results/
 
+# VS Code
 .vscode/    
 
+#OS files
 .DS_Store
 Thumbs.db
 
+#Logs
 *.log
 
 
