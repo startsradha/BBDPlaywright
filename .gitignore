@@ -11,6 +11,7 @@ coverage/
 !.env.example
 
 # playwright
+.features-gen/
 test-results/
 playwright-report/
 blob-report/
@@ -28,6 +29,5 @@ Thumbs.db
 
 #Logs
 *.log
-
 
 

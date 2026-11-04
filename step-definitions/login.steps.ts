@@ -1,34 +1,36 @@
-import { Given, Then, When } from '@cucumber/cucumber';
 import { strict as assert } from 'node:assert';
+import { createBdd, test } from 'playwright-bdd';
 import { LoginPage } from '../pages/LoginPage';
 import { config } from '../config/config';
-import { CustomWorld } from '../hooks/hooks';
+
+const { Given, Then, When } = createBdd(test);
 
 // Step definitions connect Gherkin wording to reusable page-object behavior.
-Given('I navigate to the login page', async function (this: CustomWorld) {
-  this.loginPage = new LoginPage(this.page);
-  await this.loginPage.navigateToLoginPage();
+Given('I navigate to the login page', async ({ page }) => {
+  await new LoginPage(page).navigateToLoginPage();
 });
 
-When('I enter valid username and password', async function (this: CustomWorld) {
-  await this.loginPage.enterUsername(config.username);
-  await this.loginPage.enterPassword(config.password);
+When('I enter valid username and password', async ({ page }) => {
+  const loginPage = new LoginPage(page);
+  await loginPage.enterUsername(config.username);
+  await loginPage.enterPassword(config.password);
 });
 
-When('I enter invalid username and password', async function (this: CustomWorld) {
-  await this.loginPage.enterUsername('invalid_user');
-  await this.loginPage.enterPassword('invalid_password');
+When('I enter invalid username and password', async ({ page }) => {
+  const loginPage = new LoginPage(page);
+  await loginPage.enterUsername('invalid_user');
+  await loginPage.enterPassword('invalid_password');
 });
 
-When('I click the login button', async function (this: CustomWorld) {
-  await this.loginPage.clickLogin();
+When('I click the login button', async ({ page }) => {
+  await new LoginPage(page).clickLogin();
 });
 
-Then('I should be successfully logged in', async function (this: CustomWorld) {
-  await this.loginPage.verifySuccessfulLogin();
+Then('I should be successfully logged in', async ({ page }) => {
+  await new LoginPage(page).verifySuccessfulLogin();
 });
 
-Then('I should see a login error message', async function (this: CustomWorld) {
-  const errorMessage = await this.loginPage.getLoginErrorMessage();
+Then('I should see a login error message', async ({ page }) => {
+  const errorMessage = await new LoginPage(page).getLoginErrorMessage();
   assert.match(errorMessage, /username and password do not match/i);
 });
