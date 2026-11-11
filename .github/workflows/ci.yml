@@ -14,15 +14,12 @@
       runs-on: ubuntu-latest
       timeout-minutes: 30
 
-      # Connect GitHub Actions to QA environment
-      #environment: qa
-
-      # Read QA environment variables and secrets
-      #env:
-        #TEST_ENV: qa
-        #BASE_URL: ${{ vars['BASE_URL'] }}
-        #USERNAME: ${{ secrets.USERNAME }}
-        #PASSWORD: ${{ secrets.PASSWORD }}
+      environment: qa
+      env:
+        TEST_ENV: qa
+        BASE_URL: ${{ vars.BASE_URL }}
+        USERNAME: ${{ secrets.USERNAME }}
+        PASSWORD: ${{ secrets.PASSWORD }}
 
       steps:
         - name: Checkout source code
@@ -44,8 +41,7 @@
           run: npx bddgen
 
         - name: Run BDD tests
-          run: ENV=dev npx playwright test
-          #run: npx playwright test
+          run: npx playwright test
 
         - name: Upload test results
           if: always()

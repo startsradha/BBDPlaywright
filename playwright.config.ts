@@ -1,13 +1,6 @@
 import { defineConfig, devices } from '@playwright/test';
 import { defineBddConfig } from 'playwright-bdd';
-import { Config } from './utils/config';
-
-export const playwrightDefaults = {
-  baseUrl: 'https://www.saucedemo.com/',
-  browser: 'chromium',
-  headless: true,
-  timeoutMs: 30_000,
-} as const;
+import { config } from './config/config';
 
 const testDir = defineBddConfig({
   features: 'features/*.feature',
@@ -23,7 +16,7 @@ export default defineConfig({
   //   ['allure-playwright', { outputFolder: 'allure-results' }]
   // ],
   use: {
-    baseURL: Config.baseUrl,
+    baseURL: config.baseUrl,
     headless: true,
     screenshot: 'only-on-failure',
     video: 'retain-on-failure',
